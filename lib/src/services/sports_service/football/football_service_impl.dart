@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sportify/env/env.dart';
 import 'package:sportify/src/models/football/football.dart';
 import 'package:sportify/src/models/football/event/event.dart';
+import 'package:sportify/src/models/football/league_reponse/league_reponse.dart';
 import 'package:sportify/src/repositories/api_repository/_dio.dart';
 import 'package:sportify/src/repositories/api_repository/api_repository.dart';
 import 'package:sportify/src/repositories/errors/failure.dart';
@@ -39,17 +40,44 @@ class FootballServiceImpl implements FootballService {
   }
 
   @override
-  Future<List<Football>> getFixtures(String date) async {
+  Future<List<Football>> getFixtures(
+      String? date, int? league, int? season) async {
+    Map<String, String> queryParameters = {};
+    if (date != null) {
+      queryParameters.putIfAbsent("date", () => date);
+    }
+    if (league != null) {
+      queryParameters.putIfAbsent("league", () => league.toString());
+    }
+    if (season != null) {
+      queryParameters.putIfAbsent("season", () => season.toString());
+    }
     return await _apiRepository.getData(
         path: "${Env.footballHost}/fixtures",
         headers: {_headerHost: Env.footballHost, _headerKey: Env.apiKey},
-        queryParameters: {"date": date},
+        queryParameters: queryParameters,
         builder: (data) {
           if (data != null && data is! ServerFailure) {
             debugPrint(data.toString());
             Iterable iterable = data['response'];
             return List<Football>.from(
                 iterable.map((e) => Football.fromJson(e)));
+          }
+          throw data;
+        });
+  }
+
+  @override
+  Future<List<LeagueResponse>> getLeagues() async {
+    return await _apiRepository.getData(
+        path: "${Env.footballHost}/leagues",
+        headers: {_headerHost: Env.footballHost, _headerKey: Env.apiKey},
+        builder: (data) {
+          if (data != null && data is! ServerFailure) {
+            debugPrint(data.toString());
+            Iterable iterable = data['response'];
+            return List<LeagueResponse>.from(
+                iterable.map((e) => LeagueResponse.fromJson(e)));
           }
           throw data;
         });
