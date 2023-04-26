@@ -25,10 +25,10 @@ class FootballServiceImpl implements FootballService {
   }
 
   @override
-  Future<List<Event>> getEvents(String fixture) async {
+  Future<List<Event>> getEvents(int? fixture) async {
     return await _apiRepository.getData(
         path: "${Env.footballHost}/fixtures/events",
-        queryParameters: {"fixture": fixture},
+        queryParameters: {"fixture": fixture.toString()},
         headers: {_headerHost: Env.footballHost, _headerKey: Env.apiKey},
         builder: (data) {
           if (data != null && data is! ServerFailure) {
@@ -78,6 +78,21 @@ class FootballServiceImpl implements FootballService {
             Iterable iterable = data['response'];
             return List<LeagueResponse>.from(
                 iterable.map((e) => LeagueResponse.fromJson(e)));
+          }
+          throw data;
+        });
+  }
+
+  @override
+  Future<Football> getFixture(int? id) async {
+    return await _apiRepository.getData(
+        path: "${Env.footballHost}/fixtures",
+        queryParameters: {"id": id.toString()},
+        headers: {_headerHost: Env.footballHost, _headerKey: Env.apiKey},
+        builder: (data) {
+          if (data != null && data is! ServerFailure) {
+            debugPrint(data.toString());
+            return Football.fromJson(data['response'][0]);
           }
           throw data;
         });

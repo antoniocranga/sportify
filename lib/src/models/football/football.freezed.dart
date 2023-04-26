@@ -24,6 +24,7 @@ mixin _$Football {
   League? get league => throw _privateConstructorUsedError;
   Teams? get teams => throw _privateConstructorUsedError;
   Goals? get goals => throw _privateConstructorUsedError;
+  List<Event>? get events => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,12 @@ abstract class $FootballCopyWith<$Res> {
   factory $FootballCopyWith(Football value, $Res Function(Football) then) =
       _$FootballCopyWithImpl<$Res, Football>;
   @useResult
-  $Res call({Fixture? fixture, League? league, Teams? teams, Goals? goals});
+  $Res call(
+      {Fixture? fixture,
+      League? league,
+      Teams? teams,
+      Goals? goals,
+      List<Event>? events});
 
   $FixtureCopyWith<$Res>? get fixture;
   $LeagueCopyWith<$Res>? get league;
@@ -61,6 +67,7 @@ class _$FootballCopyWithImpl<$Res, $Val extends Football>
     Object? league = freezed,
     Object? teams = freezed,
     Object? goals = freezed,
+    Object? events = freezed,
   }) {
     return _then(_value.copyWith(
       fixture: freezed == fixture
@@ -79,6 +86,10 @@ class _$FootballCopyWithImpl<$Res, $Val extends Football>
           ? _value.goals
           : goals // ignore: cast_nullable_to_non_nullable
               as Goals?,
+      events: freezed == events
+          ? _value.events
+          : events // ignore: cast_nullable_to_non_nullable
+              as List<Event>?,
     ) as $Val);
   }
 
@@ -138,7 +149,12 @@ abstract class _$$_FootballCopyWith<$Res> implements $FootballCopyWith<$Res> {
       __$$_FootballCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Fixture? fixture, League? league, Teams? teams, Goals? goals});
+  $Res call(
+      {Fixture? fixture,
+      League? league,
+      Teams? teams,
+      Goals? goals,
+      List<Event>? events});
 
   @override
   $FixtureCopyWith<$Res>? get fixture;
@@ -165,6 +181,7 @@ class __$$_FootballCopyWithImpl<$Res>
     Object? league = freezed,
     Object? teams = freezed,
     Object? goals = freezed,
+    Object? events = freezed,
   }) {
     return _then(_$_Football(
       fixture: freezed == fixture
@@ -183,6 +200,10 @@ class __$$_FootballCopyWithImpl<$Res>
           ? _value.goals
           : goals // ignore: cast_nullable_to_non_nullable
               as Goals?,
+      events: freezed == events
+          ? _value._events
+          : events // ignore: cast_nullable_to_non_nullable
+              as List<Event>?,
     ));
   }
 }
@@ -190,7 +211,13 @@ class __$$_FootballCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Football with DiagnosticableTreeMixin implements _Football {
-  const _$_Football({this.fixture, this.league, this.teams, this.goals});
+  const _$_Football(
+      {this.fixture,
+      this.league,
+      this.teams,
+      this.goals,
+      final List<Event>? events})
+      : _events = events;
 
   factory _$_Football.fromJson(Map<String, dynamic> json) =>
       _$$_FootballFromJson(json);
@@ -203,10 +230,19 @@ class _$_Football with DiagnosticableTreeMixin implements _Football {
   final Teams? teams;
   @override
   final Goals? goals;
+  final List<Event>? _events;
+  @override
+  List<Event>? get events {
+    final value = _events;
+    if (value == null) return null;
+    if (_events is EqualUnmodifiableListView) return _events;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Football(fixture: $fixture, league: $league, teams: $teams, goals: $goals)';
+    return 'Football(fixture: $fixture, league: $league, teams: $teams, goals: $goals, events: $events)';
   }
 
   @override
@@ -217,7 +253,8 @@ class _$_Football with DiagnosticableTreeMixin implements _Football {
       ..add(DiagnosticsProperty('fixture', fixture))
       ..add(DiagnosticsProperty('league', league))
       ..add(DiagnosticsProperty('teams', teams))
-      ..add(DiagnosticsProperty('goals', goals));
+      ..add(DiagnosticsProperty('goals', goals))
+      ..add(DiagnosticsProperty('events', events));
   }
 
   @override
@@ -228,12 +265,14 @@ class _$_Football with DiagnosticableTreeMixin implements _Football {
             (identical(other.fixture, fixture) || other.fixture == fixture) &&
             (identical(other.league, league) || other.league == league) &&
             (identical(other.teams, teams) || other.teams == teams) &&
-            (identical(other.goals, goals) || other.goals == goals));
+            (identical(other.goals, goals) || other.goals == goals) &&
+            const DeepCollectionEquality().equals(other._events, _events));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, fixture, league, teams, goals);
+  int get hashCode => Object.hash(runtimeType, fixture, league, teams, goals,
+      const DeepCollectionEquality().hash(_events));
 
   @JsonKey(ignore: true)
   @override
@@ -254,7 +293,8 @@ abstract class _Football implements Football {
       {final Fixture? fixture,
       final League? league,
       final Teams? teams,
-      final Goals? goals}) = _$_Football;
+      final Goals? goals,
+      final List<Event>? events}) = _$_Football;
 
   factory _Football.fromJson(Map<String, dynamic> json) = _$_Football.fromJson;
 
@@ -266,6 +306,8 @@ abstract class _Football implements Football {
   Teams? get teams;
   @override
   Goals? get goals;
+  @override
+  List<Event>? get events;
   @override
   @JsonKey(ignore: true)
   _$$_FootballCopyWith<_$_Football> get copyWith =>

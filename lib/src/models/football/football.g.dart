@@ -19,6 +19,9 @@ _$_Football _$$_FootballFromJson(Map<String, dynamic> json) => _$_Football(
       goals: json['goals'] == null
           ? null
           : Goals.fromJson(json['goals'] as Map<String, dynamic>),
+      events: (json['events'] as List<dynamic>?)
+          ?.map((e) => Event.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_FootballToJson(_$_Football instance) =>
@@ -27,4 +30,5 @@ Map<String, dynamic> _$$_FootballToJson(_$_Football instance) =>
       'league': instance.league,
       'teams': instance.teams,
       'goals': instance.goals,
+      'events': instance.events,
     };
