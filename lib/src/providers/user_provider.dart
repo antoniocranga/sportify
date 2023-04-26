@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sportify/src/models/user/user.dart';
 import 'package:sportify/src/providers/common_providers.dart';
+import 'package:sportify/src/repositories/bookmark_repository/bookmark_repository.dart';
+import 'package:sportify/src/repositories/bookmark_repository/bookmark_repository_impl.dart';
 import 'package:sportify/src/repositories/user_repository/user_repository.dart';
 import 'package:sportify/src/repositories/user_repository/user_repository_impl.dart';
 
@@ -16,6 +18,7 @@ class UserNotifier extends StateNotifier<AsyncValue<User>> {
   UserNotifier(this._ref) : super(const AsyncLoading());
 
   Future<void> fetchUser(String uid) async {
+    debugPrint('intrat');
     try {
       state = const AsyncValue.loading();
       final User user = await _ref.read(userRepositoryProvider).findById(uid);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sportify/src/providers/bookmark_provider.dart';
 import 'package:sportify/src/providers/common_providers.dart';
 import 'package:sportify/src/providers/user_provider.dart';
 import 'package:sportify/src/ui/error/error_screen.dart';
@@ -16,9 +17,11 @@ class IntermediaryScreen extends ConsumerWidget {
     return authState.when(
         data: (data) {
           if (data != null) {
-            if (ref.read(userProvider).hasValue &&
-                ref.read(userProvider).value!.id != data.uid) {
+            if (!ref.read(userProvider).hasValue) {
               ref.read(userProvider.notifier).fetchUser(data.uid);
+            }
+            if (!ref.read(bookmarkProvider).hasValue) {
+              ref.read(bookmarkProvider.notifier).findByUserId(data.uid);
             }
             return const HomeScreen();
           } else {

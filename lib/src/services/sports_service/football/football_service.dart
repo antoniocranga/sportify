@@ -4,6 +4,7 @@ import 'package:sportify/src/models/football/league_reponse/league_reponse.dart'
 
 abstract class FootballService {
   Future<List<Football>> getFixtures(String? date, int? league, int? season);
-  Future<List<Event>> getEvents(String fixture);
+  Future<List<Event>> getEvents(int? id);
+  Future<Football> getFixture(int? id);
   Future<List<LeagueResponse>> getLeagues();
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sportify/src/providers/common_providers.dart';
+import 'package:sportify/src/providers/user_provider.dart';
 import 'package:sportify/src/ui/flow/select_screen.dart';
 import 'package:sportify/src/utils/routes.dart';
 
@@ -41,17 +43,24 @@ class DrawerWidget extends HookConsumerWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.sports_baseball_outlined),
-            title: const Text('Baseball'),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.baseball);
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.person_outline),
             title: const Text('Profile'),
             onTap: () {
               Navigator.pushNamed(context, Routes.profile);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.bookmarks_outlined),
+            title: const Text('Bookmarks'),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.bookmarks);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout_outlined),
+            title: const Text('Log out'),
+            onTap: () {
+              ref.read(authRepositoryProvider).signOut();
             },
           ),
         ],
