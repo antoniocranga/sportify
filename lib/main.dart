@@ -7,6 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sportify/src/app.dart';
 import 'package:sportify/src/providers/common_providers.dart';
+import 'package:sportify/src/repositories/notifications_repository/notifications_repository_impl.dart';
+import 'package:sportify/src/utils/notifications_helper.dart';
 
 Future<void> main() async {
   final container = ProviderContainer();
@@ -38,13 +40,17 @@ Future<void> setSystemUIOverlayStyle() async {
 
 Future<void> initServices(ProviderContainer container) async {
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyBQJdyDTPxfQSMYVHcsuTfVpSnNOh-jMck",
-          appId: "1:824580255259:web:b61691fe464c9609dfd2be",
-          messagingSenderId: "824580255259",
-          projectId: "sportify-57ae5",
-          authDomain: "sportify-57ae5.firebaseapp.com",
-          storageBucket: "sportify-57ae5.appspot.com"));
+          options: const FirebaseOptions(
+              apiKey: "AIzaSyBQJdyDTPxfQSMYVHcsuTfVpSnNOh-jMck",
+              appId: "1:824580255259:web:b61691fe464c9609dfd2be",
+              messagingSenderId: "824580255259",
+              projectId: "sportify-57ae5",
+              authDomain: "sportify-57ae5.firebaseapp.com",
+              storageBucket: "sportify-57ae5.appspot.com"))
+      .whenComplete(() async {
+    await container.read(notificationsRepositoryProvider).initialize();
+  });
+  await NotificationsHelper().initialize();
   final sharedPreferences = await SharedPreferences.getInstance();
   sharedPreferencesProvider.overrideWithValue(sharedPreferences);
 }

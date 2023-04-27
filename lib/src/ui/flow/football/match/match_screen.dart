@@ -6,6 +6,7 @@ import 'package:sportify/src/models/football/event/event.dart';
 import 'package:sportify/src/models/football/football.dart';
 import 'package:sportify/src/providers/bookmark_provider.dart';
 import 'package:sportify/src/providers/user_provider.dart';
+import 'package:sportify/src/repositories/notifications_repository/notifications_repository_impl.dart';
 import 'package:sportify/src/ui/flow/football/match/match_screen_controller.dart';
 import 'package:sportify/src/utils/sizes_and_orientation.dart';
 import 'package:sportify/src/widgets/drawer_widget.dart';
@@ -52,6 +53,10 @@ class MatchScreen extends HookConsumerWidget {
                           ref
                               .read(bookmarkProvider.notifier)
                               .removeBookmark(bookmark.id);
+                          ref
+                              .read(notificationsRepositoryProvider)
+                              .unsubscribeFromTopic(
+                                  "football-match-${bookmark.matchId}");
                         } else {
                           ref.read(bookmarkProvider.notifier).addBookmark({
                             "matchId": id,
@@ -64,6 +69,9 @@ class MatchScreen extends HookConsumerWidget {
                             "nameAway": state.value!.teams?.away?.name,
                             "nameHome": state.value!.teams?.home?.name,
                           });
+                          ref
+                              .read(notificationsRepositoryProvider)
+                              .subscribeToTopic("football-match-$id");
                         }
                       },
                       icon: Icon(bookmark == null
