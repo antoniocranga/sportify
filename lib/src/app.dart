@@ -1,11 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sportify/src/ui/intermediary_screen.dart';
 import 'package:sportify/src/utils/notifications_helper.dart';
 import 'package:sportify/src/utils/routes.dart';
 import 'package:sportify/src/utils/sizes_and_orientation.dart';
+import 'package:sportify/src/utils/theme.dart';
 import 'package:sportify/src/widgets/loading_overlay.dart';
 
 class MyApp extends HookConsumerWidget {
@@ -18,6 +18,7 @@ class MyApp extends HookConsumerWidget {
         DeviceSize().init(constraints, orientation);
         return LoadingOverlay(
           child: MaterialApp(
+            theme: customThemeData(),
             navigatorKey: NotificationsHelper.navigatorState,
             scrollBehavior: MyCustomScrollBehavior(),
             debugShowCheckedModeBanner: false,

@@ -1,5 +1,4 @@
 import 'package:sportify/src/models/bookmark/bookmark.dart';
-import 'package:sportify/src/models/user/user.dart';
 
 abstract class BookmarkRepository {
   Future<Bookmark> addBookmark(Map<String, dynamic> bookmark);

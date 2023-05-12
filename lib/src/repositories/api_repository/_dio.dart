@@ -1,9 +1,10 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sportify/env/env.dart';
 import 'package:sportify/src/repositories/api_repository/api_repository.dart';
 import 'package:sportify/src/repositories/api_repository/interceptor.dart';
 import 'package:sportify/src/repositories/errors/exceptions/exceptions.dart';
@@ -12,8 +13,6 @@ import 'package:sportify/src/repositories/errors/failure.dart';
 final dioRepository = Provider<ApiRepository>((_) => DioImpl());
 
 class DioImpl implements ApiRepository {
-  
-
   DioImpl() {
     dio = Dio(
       BaseOptions(
@@ -27,7 +26,6 @@ class DioImpl implements ApiRepository {
             // HttpHeaders.accessControlAllowMethodsHeader: "GET, POST, OPTIONS",
             // HttpHeaders.contentTypeHeader: "application/json",
             // HttpHeaders.acceptHeader: "application/json"
-
           }),
     );
     dio.interceptors.add(ApiInterceptors());

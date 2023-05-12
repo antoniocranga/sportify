@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:sportify/env/env.dart';
 import 'package:sportify/src/models/bookmark/bookmark.dart';
 import 'package:sportify/src/models/football/event/event.dart';
 import 'package:sportify/src/models/football/football.dart';
@@ -24,10 +26,17 @@ class MatchScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         ref.read(matchScreenControllerProvider.notifier).getMatch(id!);
       });
+      return null;
     }, const []);
+
+    String formatDate(int timestamp) {
+      return DateFormat.yMMMMEEEEd().format(
+          DateTime.fromMillisecondsSinceEpoch(timestamp * 1000, isUtc: true));
+    }
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Sportify'),
+          title: const Text(Env.appName),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -99,114 +108,148 @@ class MatchScreen extends HookConsumerWidget {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(data.fixture?.status?.long ?? "")
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
+                              Card(
+                                child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                            data.teams?.home?.name ?? "Unknown",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall),
-                                        if (data.teams?.home?.logo != null)
-                                          Image.network(
-                                            data.teams!.home!.logo!,
-                                            width: 50,
-                                            height: 50,
+                                        if (data.fixture != null &&
+                                            data.fixture!.timestamp != null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20, bottom: 5),
+                                            child: Chip(
+                                              label: Text(formatDate(
+                                                  data.fixture!.timestamp!)),
+                                            ),
                                           ),
-                                        Text("${data.goals?.home ?? 0}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall)
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                            data.teams?.away?.name ?? "Unknown",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall),
-                                        if (data.teams?.away?.logo != null)
-                                          Image.network(
-                                            data.teams!.away!.logo!,
-                                            width: 50,
-                                            height: 50,
-                                          ),
-                                        Text("${data.goals?.away ?? 0}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall)
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 2.0.ch),
-                                child: Text(
-                                  'League',
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
-                                ),
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      if (data.league?.logo != null)
-                                        Image.network(
-                                          data.league!.logo!,
-                                          width: 50,
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20, bottom: 20),
+                                          child: Text(
+                                              '${data.league?.name} - ${data.league?.season} - ${data.league?.round}'),
                                         ),
-                                      Text(data.league?.name ?? "Unknown"),
-                                    ],
-                                  ),
-                                  Text('Season: ${data.league?.season ?? ""}'),
-                                  Text('Season: ${data.league?.round ?? ""}')
-                                ],
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  if (data.teams?.home?.logo !=
+                                                      null)
+                                                    Image.network(
+                                                      data.teams!.home!.logo!,
+                                                      width: 50,
+                                                      height: 50,
+                                                    ),
+                                                  Text(
+                                                    data.teams?.home?.name ??
+                                                        "Unknown",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleLarge,
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  Text("Home",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.grey)),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                      "${data.goals?.home ?? 0} : ${data.goals?.away ?? 0}",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headlineMedium),
+                                                  Chip(
+                                                    label: Text(data.fixture
+                                                            ?.status?.short ??
+                                                        ""),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  if (data.teams?.away?.logo !=
+                                                      null)
+                                                    Image.network(
+                                                      data.teams!.away!.logo!,
+                                                      width: 50,
+                                                      height: 50,
+                                                    ),
+                                                  Text(
+                                                    data.teams?.away?.name ??
+                                                        "Unknown",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleLarge,
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  Text("Away",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.grey)),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    )),
                               ),
                             ]),
                       ),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2.0.ch),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Venue',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                      if (data.fixture?.venue?.name != null &&
+                          data.fixture?.venue?.city != null)
+                        SliverToBoxAdapter(
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 2.0.ch, horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    data.fixture?.venue?.name ?? "Unknown",
-                                  )
+                                    'Venue',
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${data.fixture?.venue?.name} - ${data.fixture?.venue?.city}",
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2.0.ch),
+                          padding: EdgeInsets.only(
+                              left: 20, right: 20, top: 5.0.ch, bottom: 1.0.ch),
                           child: Text(
-                            'Events',
-                            style: Theme.of(context).textTheme.headlineSmall,
+                            'Details',
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ),
                       ),
@@ -220,6 +263,8 @@ class MatchScreen extends HookConsumerWidget {
                   ),
                 ),
             error: (error, stackTrace) => Text(error.toString()),
-            loading: () => const CircularProgressIndicator()));
+            loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                )));
   }
 }

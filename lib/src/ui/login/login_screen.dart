@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sportify/env/env.dart';
 import 'package:sportify/src/ui/login/login_screen_controller.dart';
 import 'package:sportify/src/ui/signup/signup_screen.dart';
-import 'package:sportify/src/utils/routes.dart';
 import 'package:sportify/src/utils/sizes_and_orientation.dart';
 
 class LoginScreen extends HookConsumerWidget {
@@ -11,7 +11,6 @@ class LoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<void> state = ref.watch(loginScreenControllerProvider);
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     return GestureDetector(
@@ -29,7 +28,7 @@ class LoginScreen extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Welcome to Sportify",
+              Text("Welcome to ${Env.appName}",
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
