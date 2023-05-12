@@ -1,5 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sportify/src/models/football/football.dart';
 import 'package:sportify/src/models/football/league_reponse/league_reponse.dart';
 import 'package:sportify/src/services/sports_service/football/football_service.dart';
 import 'package:sportify/src/services/sports_service/football/football_service_impl.dart';

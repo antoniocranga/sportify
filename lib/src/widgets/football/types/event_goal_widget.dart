@@ -60,6 +60,5 @@ class EventGoalWidget extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }

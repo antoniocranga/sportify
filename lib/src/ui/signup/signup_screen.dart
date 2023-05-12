@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sportify/env/env.dart';
 import 'package:sportify/src/ui/signup/signup_screen_controller.dart';
 import 'package:sportify/src/utils/routes.dart';
 import 'package:sportify/src/utils/sizes_and_orientation.dart';
@@ -10,7 +11,6 @@ class SignupScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<void> state = ref.watch(signupScreenControllerProvider);
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     return GestureDetector(
@@ -28,7 +28,7 @@ class SignupScreen extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Signup to Sportify",
+              Text("Signup to ${Env.appName}",
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
@@ -71,27 +71,6 @@ class SignupScreen extends HookConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-
-  _orDivider() {
-    return Row(
-      children: const [
-        Expanded(
-          flex: 3,
-          child: Divider(),
-        ),
-        Expanded(
-          child: Text(
-            "or",
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Divider(),
-        )
-      ],
     );
   }
 }

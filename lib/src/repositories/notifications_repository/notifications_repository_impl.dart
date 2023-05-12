@@ -2,17 +2,14 @@ import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sportify/src/providers/common_providers.dart';
 import 'package:sportify/src/repositories/notifications_repository/notifications_repository.dart';
 import 'package:sportify/src/utils/notifications_helper.dart';
 
-final notificationsRepositoryProvider = Provider<NotificationsRepository>(
-    (ref) => NotificationsRepositoryImpl(ref));
+final notificationsRepositoryProvider =
+    Provider<NotificationsRepository>((ref) => NotificationsRepositoryImpl());
 
 class NotificationsRepositoryImpl extends NotificationsRepository {
-  final Ref _ref;
-
-  NotificationsRepositoryImpl(this._ref);
+  NotificationsRepositoryImpl();
 
   @override
   Future<void> initialize() async {
