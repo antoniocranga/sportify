@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sportify/src/models/football/event/event.dart';
-import 'package:sportify/src/utils/sizes_and_orientation.dart';
 import 'package:sportify/src/widgets/football/types/event_card_widget.dart';
 import 'package:sportify/src/widgets/football/types/event_goal_widget.dart';
 import 'package:sportify/src/widgets/football/types/event_substitution_widget.dart';
@@ -21,9 +20,9 @@ class EventWidget extends StatelessWidget {
         return EventCardWidget(event: event);
       case 'Var':
       case 'var':
-        return ListTile();
+        return const ListTile();
       default:
-        return ListTile();
+        return const ListTile();
     }
   }
 }

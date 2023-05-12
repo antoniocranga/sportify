@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sportify/src/models/bookmark/bookmark.dart';
-import 'package:sportify/src/models/football/fixture/fixture.dart';
-import 'package:sportify/src/models/football/football.dart';
 import 'package:sportify/src/providers/bookmark_provider.dart';
 import 'package:sportify/src/ui/error/error_screen.dart';
 import 'package:sportify/src/ui/flow/football/match/match_screen.dart';
@@ -40,7 +38,7 @@ class BookmarksScreen extends HookConsumerWidget {
                               horizontal: 2.0.cw, vertical: 1.0.ch),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: 1.0.cw, horizontal: 1.0.cw),
+                                vertical: 2.0.ch, horizontal: 1.0.cw),
                             child: Column(
                               children: [
                                 Row(

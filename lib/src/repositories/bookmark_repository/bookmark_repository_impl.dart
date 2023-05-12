@@ -1,16 +1,14 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sportify/src/models/bookmark/bookmark.dart';
 import 'package:sportify/src/repositories/bookmark_repository/bookmark_repository.dart';
 import 'package:sportify/src/repositories/constants/firebase_paths.dart';
 
 class BookmarkRepositoryImpl extends BookmarkRepository {
-  final Ref _ref;
   late CollectionReference _collectionReference;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  BookmarkRepositoryImpl(this._ref) {
+  BookmarkRepositoryImpl() {
     _collectionReference =
         _firebaseFirestore.collection(FirebasePaths.bookmarksCollection);
   }

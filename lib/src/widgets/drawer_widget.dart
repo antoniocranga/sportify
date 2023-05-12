@@ -1,12 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sportify/env/env.dart';
 import 'package:sportify/src/providers/common_providers.dart';
-import 'package:sportify/src/providers/user_provider.dart';
-import 'package:sportify/src/ui/flow/select_screen.dart';
 import 'package:sportify/src/utils/routes.dart';
 
 class DrawerWidget extends HookConsumerWidget {
   const DrawerWidget({super.key});
+
+  final items = const [
+    {
+      "title": "Home",
+      "leading": Icon(Icons.home_outlined),
+      "route": Routes.home
+    },
+    {
+      "title": "Football",
+      "leading": Icon(Icons.sports_soccer_outlined),
+      "route": Routes.football
+    },
+    {
+      "title": "Basketball",
+      "leading": Icon(Icons.sports_basketball_outlined),
+      "route": Routes.basketball
+    },
+    {
+      "title": "Profile",
+      "leading": Icon(Icons.person_outline),
+      "route": Routes.profile
+    },
+    {
+      "title": "Bookmarks",
+      "leading": Icon(Icons.bookmarks_outlined),
+      "route": Routes.bookmarks
+    },
+  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,47 +42,31 @@ class DrawerWidget extends HookConsumerWidget {
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
+          DrawerHeader(
+            decoration: const BoxDecoration(
+              color: Colors.white,
             ),
-            child: Text('Drawer Header'),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(Env.appName,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineLarge!
+                        .copyWith(fontWeight: FontWeight.w600)),
+                Text('Probably the best sports news app in town',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.grey[500])),
+              ],
+            ),
           ),
-          ListTile(
-            leading: const Icon(Icons.home_outlined),
-            title: const Text('Home'),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.home);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.sports_soccer_outlined),
-            title: const Text('Football'),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.football);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.sports_basketball_outlined),
-            title: const Text('Basketball'),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.basketball);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.person_outline),
-            title: const Text('Profile'),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.profile);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.bookmarks_outlined),
-            title: const Text('Bookmarks'),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.bookmarks);
-            },
-          ),
+          ...items.map((item) => ListTile(
+              leading: item["leading"]! as Widget,
+              title: Text(item["title"]! as String),
+              onTap: () =>
+                  Navigator.pushNamed(context, item["route"]! as String))),
           ListTile(
             leading: const Icon(Icons.logout_outlined),
             title: const Text('Log out'),
