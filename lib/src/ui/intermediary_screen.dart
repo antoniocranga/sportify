@@ -5,7 +5,7 @@ import 'package:sportify/src/providers/common_providers.dart';
 import 'package:sportify/src/providers/user_provider.dart';
 import 'package:sportify/src/ui/error/error_screen.dart';
 import 'package:sportify/src/ui/home/home_screen.dart';
-import 'package:sportify/src/ui/loading/loading_screen,.dart';
+import 'package:sportify/src/ui/loading/loading_screen.dart';
 import 'package:sportify/src/ui/login/login_screen.dart';
 
 class IntermediaryScreen extends ConsumerWidget {
