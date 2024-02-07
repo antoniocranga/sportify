@@ -44,5 +44,15 @@ This project uses inject library that works with code generation, execute the fo
 flutter packages pub run build_runner build --delete-conflicting-outputs
 ```
 
+## Screenshots
+## Screenshots
+<p float="left">
+<img src = "preview/Screenshot_1707335448.png" width = 300>
+<img src = "preview/Screenshot_1707335938.png" width = 300>
+<img src = "preview/Screenshot_1707335949.png" width = 300>
+<img src = "preview/Screenshot_1707335954.png" width = 300>
+<img src = "preview/Screenshot_1707335958.png" width = 300>
+</p>
+
 # Wiki
 Checkout [wiki] for more info (working on)
