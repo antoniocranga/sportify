@@ -8,7 +8,7 @@ This repository is the home of Sportify mobile application.
 ### Technologies
 - [Freezed](https://pub.dev/packages/freezed) (Immutable models)
 - [Riverpod + Hooks](https://pub.dev/packages/riverpod) (State management)
-- [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) (Model-view-controller architecture)
+- [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) (Model-view-viewModel architecture)
 - [Firebase](https://firebase.google.com/) (Database)
 
 # How to use
